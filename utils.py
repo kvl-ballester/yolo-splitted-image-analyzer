@@ -152,21 +152,50 @@ def join_images(images, parts=2):
     
     
     
-def print_fps():
-    if not hasattr(print_fps, "start_time"):
-        print_fps.start_time = time.perf_counter()
-        print_fps.frames = 0
+def draw_fps(image, position=(10, 30)):
+    """
+    Dibuja el FPS actual sobre la imagen.
 
-    print_fps.frames += 1
+    Calcula los FPS acumulando frames y actualizando el valor cada segundo.
 
-    elapsed = time.perf_counter() - print_fps.start_time
+    Parameters
+    ----------
+    image : np.ndarray
+        Imagen sobre la que dibujar el texto.
+    position : tuple[int, int], default=(10, 30)
+        Esquina inferior izquierda del texto.
+
+    Returns
+    -------
+    np.ndarray
+        La misma imagen con el FPS dibujado.
+    """
+    if not hasattr(draw_fps, "start_time"):
+        draw_fps.start_time = time.perf_counter()
+        draw_fps.frames = 0
+        draw_fps.fps = 0.0
+
+    draw_fps.frames += 1
+
+    elapsed = time.perf_counter() - draw_fps.start_time
 
     if elapsed >= 1.0:
-        fps = print_fps.frames / elapsed
-        print(f"FPS: {fps:.2f}")
+        draw_fps.fps = draw_fps.frames / elapsed
+        draw_fps.start_time = time.perf_counter()
+        draw_fps.frames = 0
 
-        print_fps.start_time = time.perf_counter()
-        print_fps.frames = 0
+    cv2.putText(
+        image,
+        f"FPS: {draw_fps.fps:.2f}",
+        position,
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.8,
+        (0, 255, 0),
+        2,
+        cv2.LINE_AA,
+    )
+
+    return image
 
 def get_valid_objects_in_zone(parts: int) -> dict[int, list[int]]:
     configurations = {

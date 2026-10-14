@@ -1,4 +1,4 @@
-from utils import split_image, join_images, print_fps, get_valid_objects_in_zone
+from utils import split_image, join_images, draw_fps, get_valid_objects_in_zone
 from camera import Camera
 import cv2
 from ultralytics import YOLO
@@ -28,10 +28,9 @@ cam = Camera(use_opencv=False, show=False)
 while True:
 
     # STEP 1: CAPTURE FRAME
-    """ frame = cam.read()
+    frame = cam.read()
     if frame is None:
-        break """
-    frame = cv2.imread(r"files\20260926_011716.jpg")
+        break
 
     #STEP 2: SPLIT IMAGE
     images = split_image(frame, parts=PARTS)
@@ -76,6 +75,9 @@ while True:
 
     #STEP 5: JOIN IMAGES
     frame = join_images(images, parts=PARTS)
+
+    #STEP 6: DRAW FPS
+    frame = draw_fps(frame)
 
     """
         RENDER IMAGE
