@@ -28,10 +28,9 @@ cam = Camera(use_opencv=False, show=False)
 while True:
 
     # STEP 1: CAPTURE FRAME
-    """ frame = cam.read()
+    frame = cam.read()
     if frame is None:
-        break """
-    frame = cv2.imread(r"files\20260926_011716.jpg")
+        break
 
     #STEP 2: SPLIT IMAGE
     images = split_image(frame, parts=PARTS)
