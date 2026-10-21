@@ -1,0 +1,11 @@
+# Raspberry Pi 4 / Raspberry Pi OS Bookworm / Python 3.11
+# Dependencias Python para el proyecto YOLO + NCNN.
+# Picamera2 NO se instala con pip: instalarla con APT (ver instrucciones).
+
+numpy==1.24.2
+opencv-python==4.10.0.84
+matplotlib==3.8.4
+contourpy==1.2.1
+ncnn==1.0.20261020
+#ultralytics==8.4.183
+ultralytics
